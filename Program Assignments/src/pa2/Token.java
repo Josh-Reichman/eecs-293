@@ -92,7 +92,7 @@ public final class Token {
 		private final String pattern; //Indicates the regex pattern in a token
 		private final Boolean hasData; //Indicates the presence of ancillary data in a token
 	
-		Type(String pattern, Boolean hasData) {
+		private Type(String pattern, Boolean hasData) {
 			this.pattern = pattern;
 			this.hasData = hasData;
 		}

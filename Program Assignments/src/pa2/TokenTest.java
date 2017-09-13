@@ -1,18 +1,20 @@
+//Non Functional. Couldn't figure out Junit tests
 package pa2;
+import pa2.Token.Type;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class TokenTest {
-    @org.junit.jupiter.api.Test
-    void of() {
-    }
+import org.junit.Test;
 
-    @org.junit.jupiter.api.Test
-    void getType() {
-    }
 
-    @org.junit.jupiter.api.Test
-    void getData() {
-    }
+
+public class TokenTest {
+	Type testType = new Type("not",false);
+	
+	@Test
+	public void testOf() {
+		
+		Token tester = new Token());
+	}
 
 }
