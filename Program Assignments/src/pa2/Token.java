@@ -2,7 +2,9 @@ package pa2;
 
 import java.util.*;
 
+
 public final class Token {
+	
 	private final Type type;
 	private final Optional<String> data;
 	private static Map<Builder, Token> tokenMap;
@@ -13,15 +15,33 @@ public final class Token {
 	}
 
 	public static Token of(Type type, String data) {
-		return null; // TODO: replace with of() code
 
+		Builder tokenBuilder = new Builder(type, Optional.ofNullable(data));
+		if (!tokenMap.containsKey(tokenBuilder)) {
+			if(tokenMap == null) {
+				tokenMap = new Hashtable<Builder,Token>();
+			}
+			tokenMap.put(tokenBuilder, tokenBuilder.build());
+		}
+		//if builder exists but has a token mismatched, rebuild and replace
+		Token token = new Token(type,Optional.ofNullable(data));
+		if(!tokenMap.get(tokenBuilder).equals(token)) {
+			tokenMap.replace(tokenBuilder, tokenBuilder.build());
+		}
+		//If token already exists with the same type and data, return the previously token.
+		return tokenMap.get(tokenBuilder);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
+
+	public Type getType() {
+		return type;
+	}
+
+	public Optional<String> getData() {
+		return data;
+	}
+
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -31,11 +51,6 @@ public final class Token {
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -55,53 +70,38 @@ public final class Token {
 		return true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
 
 	@Override
 	public String toString() {
 		return "Token [type=" + type + ", data=" + data + ", toString()=" + super.toString() + "]";
 	}
-
+	
+	//Type enum
 	public enum Type {
-		NOT("not",false),
-		AND("and",false),
-		OR("or",false), 
-		OPEN("(",false),
-		CLOSE(")",false), 
-		ID("[a-z]",true),
-		NUMBER("[\\d+]",true),
-		BINARYOP("[\\+\\-\\*\\/]",true),
-		WHITESPACE("\\s",false); 
+		NOT("not", false), AND("and", false), OR("or", false), OPEN("(", false), CLOSE(")", false), ID("[a-z]+",
+				true), NUMBER("\\-?[0-9]", true), BINARYOP("\\+|-|\\*|/", true), WHITESPACE("\\s+", false);
 
-		private final String pattern;
-		private final Boolean hasData;
+		private final String pattern; //Indicates the regex pattern in a token
+		private final Boolean hasData; //Indicates the presence of ancillary data in a token
 
 		private Type(String pattern, Boolean hasData) {
 			this.pattern = pattern;
 			this.hasData = hasData;
 		}
 
-		/**
-		 * @return pattern
-		 */
-		private String getPattern() {
+		public String getPattern() {
 			return pattern;
 		}
 
-		/**
-		 * @return hasData
-		 */
-		private Boolean getHasData() {
+		public Boolean getHasData() {
 			return hasData;
 		}
 
 	}
-
+	
+	//Token Builder Class
 	private static class Builder {
+		
 		private final Type type;
 		private final Optional<String> data;
 
@@ -110,11 +110,11 @@ public final class Token {
 			this.data = data;
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see java.lang.Object#hashCode()
-		 */
+		private Token build() {
+			return new Token(type, data);
+		}
+
+
 		@Override
 		public int hashCode() {
 			final int prime = 31;
@@ -124,11 +124,6 @@ public final class Token {
 			return result;
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see java.lang.Object#equals(java.lang.Object)
-		 */
 		@Override
 		public boolean equals(Object obj) {
 			if (this == obj)
@@ -148,12 +143,8 @@ public final class Token {
 			return true;
 		}
 
-		private Token build() {
-			return null; // TODO: Replace with build() code
-
-		}
 	}
-
+	//LocationalToken Class
 	public final class LocationalToken {
 		private final Token token;
 		private int location;
@@ -163,19 +154,21 @@ public final class Token {
 			this.location = location;
 		}
 
-		/**
-		 * @return the token
-		 */
 		public Token getToken() {
 			return token;
 		}
 
-		/**
-		 * @return the location
-		 */
 		public int getLocation() {
 			return location;
 		}
+		
+		public Token.Type getTokenType() {
+	        return token.getType();
+	    }
+
+	    public Optional<String> getTokenData() {
+	        return token.getData();
+	    }
 
 	}
 
