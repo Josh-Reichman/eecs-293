@@ -82,10 +82,10 @@ public final class Token {
 		NOT("not", false),
 		AND("and", false), 
 		OR("or", false), 
-		OPEN("(", false), 
-		CLOSE(")", false),
+		OPEN("\\(", false), //add \\ to ( 
+		CLOSE("\\)", false), //add \\ to )
 		ID("[a-z]+",true), 
-		NUMBER("\\-?[0-9]", true), 
+		NUMBER("\\-?[0-9]+", true), // add + to end
 		BINARYOP("\\+|-|\\*|/", true),
 		WHITESPACE("\\s+", false);
 	
