@@ -1,5 +1,5 @@
 //Non Functional. Couldn't figure out Junit tests
-package pa2;
+package lexer;
 
 import static org.junit.Assert.*;
 

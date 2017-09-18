@@ -1,4 +1,4 @@
-package pa2;
+package lexer;
 
 public class Main {
 
