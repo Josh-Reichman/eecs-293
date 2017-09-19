@@ -72,22 +72,23 @@ public final class Token {
 
 	//enum Type
 	public enum Type {
-		NOT("not", false),
-		AND("and", false), 
-		OR("or", false), 
-		OPEN("\\(", false), //add \\ to ( 
-		CLOSE("\\)", false), //add \\ to )
-		ID("[a-z]+",true), 
-		NUMBER("\\-?[0-9]+", true), // add + to end
-		BINARYOP("\\+|-|\\*|/", true),
-		WHITESPACE("\\s+", false);
+		NOT("not", false, false),
+		AND("and", false, true), 
+		OR("or", false, true), 
+		OPEN("\\(", false, false), //add \\ to ( 
+		CLOSE("\\)", false, false), //add \\ to )
+		ID("[a-z]+",true, false), 
+		NUMBER("\\-?[0-9]+", true, false), // add + to end
+		BINARYOP("\\+|-|\\*|/", true, false),
+		WHITESPACE("\\s+", false, false);
 
 		private final String pattern; // Indicates the regex pattern in a token
 		private final Boolean hasData; // Indicates the presence of ancillary data in a token
-
-		private Type(String pattern, Boolean hasData) {
+		private final boolean isComplex; 
+		private Type(String pattern, Boolean hasData, boolean isComplex) {
 			this.pattern = pattern;
 			this.hasData = hasData;
+			this.isComplex = isComplex;
 		}
 
 		public String getPattern() {
@@ -97,7 +98,10 @@ public final class Token {
 		public Boolean getHasData() {
 			return hasData;
 		}
-
+		
+		public boolean getIsComplex() {
+			return isComplex;
+		}
 	}
 
 	// Token Builder Class

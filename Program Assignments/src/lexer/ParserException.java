@@ -17,21 +17,15 @@ public final class ParserException extends Exception {
 	}
 
 	// Constructor 1 sets errorCode and location from token
-	public ParserException(int location, ErrorCode errorCode) {
-
+	public ParserException(LocationalToken token, ErrorCode errorCode) {
+		this.location = token.getLocation();
+		this.errorCode = errorCode;
 	}
 
 	// Constructor 2 sets errorCode and location to -1
 	public ParserException(ErrorCode errorCode) {
-
-	}
-
-	public static void verify(Optional<LocationalToken> token) throws ParserException {
-		
-	}
-
-	public static void verifyEnd(Optional<LocationalToken> token) throws ParserException {
-		
+		this.errorCode = errorCode;
+		this.location = -1;
 	}
 
 	public ErrorCode getErrorCode() {
@@ -42,8 +36,21 @@ public final class ParserException extends Exception {
 		return location;
 	}
 
+	public static void verify(Optional<LocationalToken> token) throws ParserException {
+		if (!token.isPresent()) {
+			throw new ParserException(ErrorCode.TOKEN_EXPECTED);
+		}
+	}
+
+	public static void verifyEnd(Optional<LocationalToken> token) throws ParserException {
+		if (token.isPresent()) {
+			throw new ParserException(ErrorCode.TRAILING_INPUT);
+		}
+	}
+
 	@Override
 	public String toString() {
 		return "ParserException [errorCode=" + errorCode + ", location=" + location + "]";
 	}
+
 }
