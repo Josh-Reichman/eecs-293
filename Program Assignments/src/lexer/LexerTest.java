@@ -14,19 +14,15 @@ import org.junit.Test;
 public class LexerTest {
 
 	/**
-	 * Test method for {@link lexer.Lexer#Lexer(java.lang.String)}.
-	 */
-	@Test
-	public void testLexer() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
 	 * Test method for {@link lexer.Lexer#hasNext()}.
 	 */
 	@Test
 	public void testHasNext() {
-		fail("Not yet implemented"); // TODO
+		Lexer testLexer = new Lexer("this AND that");
+		for(int numberTokens=0;numberTokens<4;numberTokens++){
+			assertEquals(true,testLexer.hasNext());
+		}
+		assertEquals(false,testLexer.hasNext());
 	}
 
 	/**
