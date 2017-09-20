@@ -18,7 +18,7 @@ public class LexerTest {
 	 */
 	@Test
 	public void testHasNext() {
-		Lexer testLexer = new Lexer("this AND that");
+		Lexer testLexer = new Lexer("this AND that");//no caps)
 		for(int numberTokens=0;numberTokens<4;numberTokens++){
 			assertEquals(true,testLexer.hasNext());
 		}
