@@ -1,13 +1,13 @@
 package lexer;
 
-import java.util.Optional;
+import java.util.*;
 
 //LocationalToken Class
 public final class LocationalToken {
 	private final Token token;
 	private int location;
 
-	private LocationalToken(Token token, int location) {
+	public LocationalToken(Token token, int location) {
 		this.token = token;
 		this.location = location;
 	}
