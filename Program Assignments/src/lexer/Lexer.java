@@ -13,14 +13,25 @@ public class Lexer {
 
 	public Lexer(String input) {
 		matcher = tokenPatterns.matcher(input);
+		
 	}
-
+	
+	static 
+	{
+		Pattern.compile("(?<AND>" + Token.Type.AND.getPattern() + ")|(?<OR>" + Token.Type.OR.getPattern() + ")|"); // etc
+	}
+	
 	public Boolean hasNext() {
-
+		
 	}
 
 	public LocationalToken next() throws ParserException {
-		throw new ParserException(ErrorCode.TOKEN_EXPECTED);
+		if(matcher.find()) {
+			
+		}
+		else {
+			throw new ParserException(ErrorCode.TOKEN_EXPECTED);
+		}
 	}
 
 	public Optional<LocationalToken> nextValid(Set<Token.Type> validTypes, Set<Token.Type> invalidTypes)
