@@ -30,9 +30,9 @@ public class Lexer {
 	}
 
 	public LocationalToken next() throws ParserException {
-		for (Token.Type type : Token.Type.values()) {
-			if (matcher.group(type.getPattern()) != null) {
-				Token t = Token.of(type, matcher.group()); 
+		for (Token.Type typeCheck : Token.Type.values()) {
+			if (matcher.group(typeCheck.getPattern()) != null) {
+				Token t = Token.of(typeCheck, matcher.group());
 				return new LocationalToken(t, matcher.start());
 			}
 		}
@@ -41,8 +41,16 @@ public class Lexer {
 	}
 
 	public Optional<LocationalToken> nextValid(Set<Token.Type> validTypes, Set<Token.Type> invalidTypes) throws ParserException {
-		throw new ParserException(ErrorCode.INVALID_TOKEN);
-
+		LocationalToken currentToken = new LocationalToken(next().getToken(), next().getLocation());
+		while (hasNext()) {
+			if (validTypes.contains(currentToken)) {
+				return null; // change to token
+			} else if (invalidTypes.contains(currentToken)) {
+				throw new ParserException(ErrorCode.INVALID_TOKEN);
+			}
+			currentToken = new LocationalToken(next().getToken(), next().getLocation());
+		}
+		return Optional.empty();
 	}
 
 }
