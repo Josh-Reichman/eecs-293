@@ -41,14 +41,14 @@ public class Lexer {
 	}
 
 	public Optional<LocationalToken> nextValid(Set<Token.Type> validTypes, Set<Token.Type> invalidTypes) throws ParserException {
-		LocationalToken currentToken = new LocationalToken(next().getToken(), next().getLocation());
+		LocationalToken currentToken;
 		while (hasNext()) {
-			if (validTypes.contains(currentToken)) {
-				return null; // change to token
-			} else if (invalidTypes.contains(currentToken)) {
-				throw new ParserException(ErrorCode.INVALID_TOKEN);
+			currentToken = next();
+			if (validTypes.contains(currentToken.getTokenType())) {
+				return Optional.of(currentToken); // change to token
+			} else if (invalidTypes.contains(currentToken.getTokenType())) {
+				throw new ParserException(currentToken,ErrorCode.INVALID_TOKEN);
 			}
-			currentToken = new LocationalToken(next().getToken(), next().getLocation());
 		}
 		return Optional.empty();
 	}
