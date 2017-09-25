@@ -13,7 +13,7 @@ public final class ParserException extends Exception {
 	private final int location;
 
 	public enum ErrorCode {
-		TOKEN_EXPECTED, INVALID_TOKEN, TRAILING_INPUT;
+		TOKEN_EXPECTED, INVALID_TOKEN, TRAILING_INPUT, AND_EXPECTED, OPEN_EXPECTED, CLOSE_EXPECTED, ID_EXPECTED;
 	}
 
 	// Constructor 1 sets errorCode and location from token

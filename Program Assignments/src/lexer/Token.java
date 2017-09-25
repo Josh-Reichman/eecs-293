@@ -72,23 +72,25 @@ public final class Token {
 
 	//enum Type
 	public enum Type {
-		NOT("not", false, false),
-		AND("and", false, true), 
-		OR("or", false, true), 
-		OPEN("\\(", false, false), //add \\ to ( 
-		CLOSE("\\)", false, false), //add \\ to )
+		NOT("not", false, false, null),
+		AND("and", false, true, ParserException.ErrorCode
+		OR("or", false, true,null), 
+		OPEN("\\(", false, false),
+		CLOSE("\\)", false, false),
 		ID("[a-z]+",true, false), 
-		NUMBER("\\-?[0-9]+", true, false), // add + to end
-		BINARYOP("\\+|-|\\*|/", true, false),
-		WHITESPACE("\\s+", false, false);
+		NUMBER("\\-?[0-9]+", true, false,null),
+		BINARYOP("\\+|-|\\*|/", true, false,null),
+		WHITESPACE("\\s+", false, false,null);
 
 		private final String pattern; // Indicates the regex pattern in a token
 		private final Boolean hasData; // Indicates the presence of ancillary data in a token
 		private final boolean isComplex; 
-		private Type(String pattern, Boolean hasData, boolean isComplex) {
+		private Optional<ParserException.ErrorCode> errorCode;
+		private Type(String pattern, Boolean hasData, boolean isComplex,Optional<ParserException.ErrorCode> errorCode) {
 			this.pattern = pattern;
 			this.hasData = hasData;
 			this.isComplex = isComplex;
+			this.errorCode = errorCode;
 		}
 
 		public String getPattern() {
