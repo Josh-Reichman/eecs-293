@@ -10,8 +10,7 @@ public final class DisjunctiveExpression {
 
 	public static final class Builder {
 
-		public static final DisjunctiveExpression build(LocationalToken token, DisjunctiveLexer lexer)
-				throws ParserException {
+		public static final DisjunctiveExpression build(LocationalToken token, DisjunctiveLexer lexer) throws ParserException {
 			
 			//add optional
 			ParserException.verify(Token.Type.NOT,token);
