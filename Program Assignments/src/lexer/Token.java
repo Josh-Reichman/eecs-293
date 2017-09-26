@@ -2,6 +2,8 @@ package lexer;
 
 import java.util.*;
 
+import lexer.ParserException.ErrorCode;
+
 public final class Token {
 
 	private final Type type;
@@ -72,15 +74,15 @@ public final class Token {
 
 	//enum Type
 	public enum Type {
-		NOT("not", false, false, null),
-		AND("and", false, true, ParserException.ErrorCode
-		OR("or", false, true,null), 
-		OPEN("\\(", false, false),
-		CLOSE("\\)", false, false),
-		ID("[a-z]+",true, false), 
-		NUMBER("\\-?[0-9]+", true, false,null),
-		BINARYOP("\\+|-|\\*|/", true, false,null),
-		WHITESPACE("\\s+", false, false,null);
+		NOT("not", false, false, Optional.empty()),
+		AND("and", false, true, Optional.of(ParserException.ErrorCode.AND_EXPECTED)),
+		OR("or", false, true,Optional.empty()), 
+		OPEN("\\(", false, false,Optional.of(ParserException.ErrorCode.OPEN_EXPECTED)),
+		CLOSE("\\)", false, false,Optional.of(ParserException.ErrorCode.CLOSE_EXPECTED)),
+		ID("[a-z]+",true, false,Optional.of(ParserException.ErrorCode.ID_EXPECTED)), 
+		NUMBER("\\-?[0-9]+", true, false,Optional.empty()),
+		BINARYOP("\\+|-|\\*|/", true, false,Optional.empty()),
+		WHITESPACE("\\s+", false, false,Optional.empty());
 
 		private final String pattern; // Indicates the regex pattern in a token
 		private final Boolean hasData; // Indicates the presence of ancillary data in a token
@@ -103,6 +105,9 @@ public final class Token {
 		
 		public boolean getIsComplex() {
 			return isComplex;
+		}
+		public Optional<ErrorCode> getErrorCode(){
+			return errorCode;
 		}
 	}
 
