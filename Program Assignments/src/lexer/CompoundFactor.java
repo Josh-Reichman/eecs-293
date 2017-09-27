@@ -38,7 +38,7 @@ public class CompoundFactor implements Factor {
 			Optional<LocationalToken> tokenTemp;
 			tokenTemp = lexer.nextValid();
 			ParserException.verify(tokenTemp);
-			ParserException.verify(Token.Type.ID, tokenTemp.get());
+			//ParserException.verify(Token.Type.ID, tokenTemp.get());
 
 			return DisjunctiveExpression.Builder.build(tokenTemp.get(),lexer);
 		}

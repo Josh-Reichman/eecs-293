@@ -20,7 +20,7 @@ public final class DisjunctiveExpression {
 
 			if (Token.Type.NOT.equals(token.getTokenType())) {
 				positive = false;
-				tokenTemp = lexer.nextValid().get();
+				tokenTemp = lexer.nextValid().get();//add verification
 			} else {
 				tokenTemp = token;
 			}
