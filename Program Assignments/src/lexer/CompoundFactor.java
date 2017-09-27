@@ -1,31 +1,52 @@
 package lexer;
 
-public class CompoundFactor implements Factor {
-	private final Identifier leftExpression;
-	private final Identifier rightExpression;
+import java.util.Optional;
 
-	private CompoundFactor(Identifier leftExpression,Identifier rightExpression){
+public class CompoundFactor implements Factor {
+	
+	//TODO: change all Identifiers to DisjunctiveExpressions
+	private final DisjunctiveExpression leftExpression; 
+	private final DisjunctiveExpression rightExpression;
+
+	private CompoundFactor(DisjunctiveExpression leftExpression, DisjunctiveExpression rightExpression) {
 		this.leftExpression = leftExpression;
 		this.rightExpression = rightExpression;
 	}
-	
+
 	public static final class Builder {
 
 		public static final CompoundFactor build(LocationalToken token, DisjunctiveLexer lexer) throws ParserException {
-			//finish builder
-			Identifier.Builder leftExpressionBuilder = new Identifier.Builder();
-			Identifier.Builder rightExpressionBuilder = new Identifier.Builder();
-			ParserException.verify(Token.Type.OPEN,token);
-			lexer.nextValid();
-			ParserException.verify(Token.Type.ID,token);
-			leftExpressionBuilder.build(token);
-			lexer.nextValid();
-			ParserException.verify(Token.Type.AND,token);
-			lexer.nextValid();
-			ParserException.verify(Token.Type.ID,token);
-			rightExpressionBuilder.build(token);
-			lexer.nextValid();
-			ParserException.verify(Token.Type.CLOSE,token);
+			ParserException.verify(Token.Type.OPEN, token);
+
+			DisjunctiveExpression left = buildDisjunctiveExpression(lexer);
+			verifyType(lexer, Token.Type.AND);
+
+			DisjunctiveExpression right = buildDisjunctiveExpression(lexer);
+			verifyType(lexer, Token.Type.CLOSE);
+
+			return new CompoundFactor(left, right);
 		}
+
+		private static void verifyType(DisjunctiveLexer lexer, Token.Type expectedType) throws ParserException {
+			Optional<LocationalToken> tokenTemp;
+			tokenTemp = lexer.nextValid();
+			ParserException.verify(tokenTemp);
+			ParserException.verify(expectedType, tokenTemp.get());
+		}
+
+		private static DisjunctiveExpression buildDisjunctiveExpression(DisjunctiveLexer lexer) throws ParserException {
+			Optional<LocationalToken> tokenTemp;
+			tokenTemp = lexer.nextValid();
+			ParserException.verify(tokenTemp);
+			ParserException.verify(Token.Type.ID, tokenTemp.get());
+
+			return DisjunctiveExpression.Builder.build(tokenTemp.get(),lexer);
+		}
+
+	}
+
+	@Override
+	public String toString() {
+		return "CompoundFactor [leftExpression=" + leftExpression + ", rightExpression=" + rightExpression + "]";
 	}
 }

@@ -15,5 +15,14 @@ public class TokenTest {
 		
 		Token tester = new Token());
 	}
+	@Test
+	public void testGetType() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@Test
+	public void testGetData() {
+		fail("Not yet implemented"); // TODO
+	}
 
 }
