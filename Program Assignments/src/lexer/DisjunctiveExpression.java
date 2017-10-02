@@ -39,4 +39,7 @@ public final class DisjunctiveExpression {
 	public final DisjunctiveExpression negate() {
 		return new DisjunctiveExpression(factor,!positive);
 	}
+	public final String conjunctiveRepresentation() {
+		return factor.conjunctiveRepresentation().getRepresentation(); //TODO: Make sure this is right
+	}
 }

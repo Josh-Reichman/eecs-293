@@ -25,4 +25,9 @@ public final class Identifier implements Factor{
 	public String toString() {
 		return "Identifier [id=" + id + "]";
 	}
+
+	@Override
+	public ConjunctiveRepresentation conjunctiveRepresentation() {
+		return new ConjunctiveRepresentation(id,false);
+	}
 }

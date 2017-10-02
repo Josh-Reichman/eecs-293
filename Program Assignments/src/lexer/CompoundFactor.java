@@ -49,4 +49,8 @@ public class CompoundFactor implements Factor {
 	public String toString() {
 		return "CompoundFactor [leftExpression=" + leftExpression + ", rightExpression=" + rightExpression + "]";
 	}
+	@Override
+	public ConjunctiveRepresentation conjunctiveRepresentation() {
+		return new ConjunctiveRepresentation(null, true); //TODO: Impliment string
+	}
 }
