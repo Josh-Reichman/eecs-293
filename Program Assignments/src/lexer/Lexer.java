@@ -32,8 +32,8 @@ public class Lexer {
 	public LocationalToken next() throws ParserException {
 		for (Token.Type typeCheck : Token.Type.values()) {
 			if (matcher.group(typeCheck.getPattern()) != null) {
-				Token t = Token.of(typeCheck, matcher.group());
-				return new LocationalToken(t, matcher.start());
+				Token token = Token.of(typeCheck, matcher.group());
+				return new LocationalToken(token, matcher.start());
 			}
 		}
 

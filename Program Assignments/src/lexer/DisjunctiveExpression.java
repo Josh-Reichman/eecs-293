@@ -17,10 +17,12 @@ public final class DisjunctiveExpression {
 			boolean positive = true;
 			
 			LocationalToken tokenTemp;
-
+			
 			if (Token.Type.NOT.equals(token.getTokenType())) {
-				positive = false;
+				positive = false;				
+				ParserException.verify(lexer.nextValid());
 				tokenTemp = lexer.nextValid().get();//add verification
+				
 			} else {
 				tokenTemp = token;
 			}
