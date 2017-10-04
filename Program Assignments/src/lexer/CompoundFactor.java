@@ -3,9 +3,9 @@ package lexer;
 import java.util.Optional;
 
 public class CompoundFactor implements Factor {
-	
-	//TODO: change all Identifiers to DisjunctiveExpressions
-	private final DisjunctiveExpression leftExpression; 
+
+	// TODO: change all Identifiers to DisjunctiveExpressions
+	private final DisjunctiveExpression leftExpression;
 	private final DisjunctiveExpression rightExpression;
 
 	private CompoundFactor(DisjunctiveExpression leftExpression, DisjunctiveExpression rightExpression) {
@@ -38,9 +38,9 @@ public class CompoundFactor implements Factor {
 			Optional<LocationalToken> tokenTemp;
 			tokenTemp = lexer.nextValid();
 			ParserException.verify(tokenTemp);
-			//ParserException.verify(Token.Type.ID, tokenTemp.get());
+			ParserException.verify(Token.Type.ID, tokenTemp.get());
 
-			return DisjunctiveExpression.Builder.build(tokenTemp.get(),lexer);
+			return DisjunctiveExpression.Builder.build(tokenTemp.get(), lexer);
 		}
 
 	}
@@ -49,8 +49,11 @@ public class CompoundFactor implements Factor {
 	public String toString() {
 		return "CompoundFactor [leftExpression=" + leftExpression + ", rightExpression=" + rightExpression + "]";
 	}
+
 	@Override
 	public ConjunctiveRepresentation conjunctiveRepresentation() {
-		return new ConjunctiveRepresentation(null, true); //TODO: Impliment string
+		return new ConjunctiveRepresentation("( " + leftExpression.conjunctiveRepresentation() + " OR "
+				+ rightExpression.conjunctiveRepresentation() + " )", true);
 	}
+
 }

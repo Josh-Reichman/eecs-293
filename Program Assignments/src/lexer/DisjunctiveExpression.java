@@ -1,6 +1,5 @@
 package lexer;
 
-
 public final class DisjunctiveExpression {
 	private final Factor factor;
 	private final boolean positive;
@@ -15,14 +14,14 @@ public final class DisjunctiveExpression {
 		public static final DisjunctiveExpression build(LocationalToken token, DisjunctiveLexer lexer)
 				throws ParserException {
 			boolean positive = true;
-			
+
 			LocationalToken tokenTemp;
-			
+
 			if (Token.Type.NOT.equals(token.getTokenType())) {
-				positive = false;				
+				positive = false;
 				ParserException.verify(lexer.nextValid());
-				tokenTemp = lexer.nextValid().get();//add verification
-				
+				tokenTemp = lexer.nextValid().get();// add verification
+
 			} else {
 				tokenTemp = token;
 			}
@@ -37,9 +36,13 @@ public final class DisjunctiveExpression {
 	}
 
 	public final DisjunctiveExpression negate() {
-		return new DisjunctiveExpression(factor,!positive);
+		return new DisjunctiveExpression(factor, !positive);
 	}
+
 	public final String conjunctiveRepresentation() {
-		return factor.conjunctiveRepresentation().getRepresentation(); //TODO: Make sure this is right
+		if (factor.conjunctiveRepresentation().isNegation() != (positive)) {
+			return ("NOT " + factor.conjunctiveRepresentation().getRepresentation());
+		}
+		return factor.conjunctiveRepresentation().getRepresentation(); // TODO: Make sure this is right
 	}
 }
