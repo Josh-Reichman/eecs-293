@@ -40,7 +40,7 @@ public final class DisjunctiveExpression {
 	}
 
 	public final String conjunctiveRepresentation() {
-		if (factor.conjunctiveRepresentation().isNegation() != (positive)) {
+		if (factor.conjunctiveRepresentation().isNegation() == (positive)) {
 			return ("NOT " + factor.conjunctiveRepresentation().getRepresentation());
 		}
 		return factor.conjunctiveRepresentation().getRepresentation(); // TODO: Make sure this is right

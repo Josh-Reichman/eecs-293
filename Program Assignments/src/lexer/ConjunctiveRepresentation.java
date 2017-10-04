@@ -1,19 +1,20 @@
 package lexer;
 
-public final class ConjunctiveRepresentation {
+//got rid of public
+final class ConjunctiveRepresentation {
 	private final String representation;
 	private final boolean negation;
 
-	public ConjunctiveRepresentation(String representation, boolean negation) {
+	ConjunctiveRepresentation(String representation, boolean negation) {
 		this.representation = representation;
 		this.negation = negation;
 	}
 
-	public final String getRepresentation() {
+	final String getRepresentation() {
 		return representation;
 	}
 
-	public final boolean isNegation() {
+	final boolean isNegation() {
 		return negation;
 	}
 

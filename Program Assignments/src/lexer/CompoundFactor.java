@@ -52,8 +52,8 @@ public class CompoundFactor implements Factor {
 
 	@Override
 	public ConjunctiveRepresentation conjunctiveRepresentation() {
-		return new ConjunctiveRepresentation("( " + leftExpression.conjunctiveRepresentation() + " OR "
-				+ rightExpression.conjunctiveRepresentation() + " )", true);
+		return new ConjunctiveRepresentation("( " + leftExpression.negate().conjunctiveRepresentation() + " OR "
+				+ rightExpression.negate().conjunctiveRepresentation() + " )", true);
 	}
 
 }
